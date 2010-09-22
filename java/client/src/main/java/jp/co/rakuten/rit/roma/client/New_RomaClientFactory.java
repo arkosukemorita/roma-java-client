@@ -4,7 +4,7 @@ import java.util.Properties;
 
 public interface New_RomaClientFactory {
 
-	New_RomaClient newRomaClient();
+	New_RomaClient newRomaClient() throws ClientException;
 
-	New_RomaClient newRomaClient(Properties props);
+	New_RomaClient newRomaClient(Properties props) throws ClientException;
 }
