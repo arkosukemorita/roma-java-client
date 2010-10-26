@@ -127,6 +127,8 @@ public interface New_RomaClient {
      */
     boolean put(String key, byte[] value, Date expiry) throws ClientException;
 
+    boolean put(String key, byte[] value, long expiry) throws ClientException;
+
     /**
      * Get a value with a key.
      * 
@@ -170,6 +172,9 @@ public interface New_RomaClient {
     boolean append(String key, byte[] value, Date expiry)
 	    throws ClientException;
 
+    boolean append(String key, byte[] value, long expiry)
+	    throws ClientException;
+
     /**
      * Prepend the given value to the existing value.
      * 
@@ -191,6 +196,9 @@ public interface New_RomaClient {
      * @throws ClientException
      */
     boolean prepend(String key, byte[] value, Date expiry)
+	    throws ClientException;
+
+    boolean prepend(String key, byte[] value, long expiry)
 	    throws ClientException;
 
     /**
@@ -247,6 +255,9 @@ public interface New_RomaClient {
     CasResponse cas(String key, long casID, byte[] value, Date expiry)
 	    throws ClientException;
 
+    CasResponse cas(String key, long casID, byte[] value, long expiry)
+	    throws ClientException;
+
     boolean exec(New_Command command, CommandContext context)
 	    throws CommandException;
 
@@ -275,6 +286,6 @@ public interface New_RomaClient {
      */
     boolean add(String key, byte[] value, Date expiry) throws ClientException;
 
-    boolean put(String key, byte[] value, long expiry) throws ClientException;
+    boolean add(String key, byte[] value, long expiry) throws ClientException;
 
 }

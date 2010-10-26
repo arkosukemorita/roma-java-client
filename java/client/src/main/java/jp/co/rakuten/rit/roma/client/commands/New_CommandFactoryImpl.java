@@ -14,83 +14,83 @@ public class New_CommandFactoryImpl implements New_CommandFactory {
     protected void addCommands() {
 	
 	// get command
-	New_Command getCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_GetCommandImpl()));
+	New_Command getCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_GetCommand()));
 	addCommand(CommandID.GET, getCommand);
 	
 	// gets command
-	New_Command getsCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_GetsCommandImpl()));
+	New_Command getsCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_GetsCommand()));
 	addCommand(CommandID.GETS, getsCommand);
 	
 	// gets_opt command
-	New_Command getsOptCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_GetsOptCommandImpl()));
+	New_Command getsOptCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_GetsOptCommand()));
 	addCommand(CommandID.GETS_OPT, getsOptCommand);
 	
 	// gets_with_casID command
-	New_Command getsWithCasIDCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_GetsWithCasIDCommandImpl()));
+	New_Command getsWithCasIDCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_GetsWithCasIDCommand()));
 	addCommand(CommandID.GETS_WITH_CASID, getsWithCasIDCommand);
 	
 	// gets_with_casID_opt command
-	New_Command getsWithCasIDOptCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_GetsWithCasIDOptCommandImpl()));
+	New_Command getsWithCasIDOptCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_GetsWithCasIDOptCommand()));
 	addCommand(CommandID.GETS_WITH_CASID_OPT, getsWithCasIDOptCommand);
 	
 	// set command
-	New_Command setCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_SetCommandImpl()));
+	New_Command setCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_SetCommand()));
 	addCommand(CommandID.SET, setCommand);
 	
 	// append command
-	New_Command appendCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_AppendCommandImpl()));
+	New_Command appendCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_AppendCommand()));
 	addCommand(CommandID.APPEND, appendCommand);
 
 	// prepend command
-	New_Command prependCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_PrependCommandImpl()));
+	New_Command prependCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_PrependCommand()));
 	addCommand(CommandID.PREPEND, prependCommand);
 
 	// delete command
-	New_Command deleteCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_DeleteCommandImpl()));
+	New_Command deleteCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_DeleteCommand()));
 	addCommand(CommandID.DELETE, deleteCommand);
 
 	// increment command
-	New_Command incrCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_IncrCommandImpl()));
+	New_Command incrCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_IncrCommand()));
 	addCommand(CommandID.INCREMENT, incrCommand);
 
 	// decrement command
-	New_Command decrCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_DecrCommandImpl()));
+	New_Command decrCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_DecrCommand()));
 	addCommand(CommandID.DECREMENT, decrCommand);
 
 	// cas command
-	New_Command casCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_CasCommandImpl()));
+	New_Command casCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_CasCommand()));
 	addCommand(CommandID.CAS, casCommand);
 
 	// expire command
-	New_Command expireCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_ExpireCommandImpl()));
+	New_Command expireCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_ExpireCommand()));
 	addCommand(CommandID.EXPIRE, expireCommand);
 
 	// routing_dump command
-	New_Command routingdumpCommand = new New_TimeoutCommandImpl(
-		new New_RoutingdumpCommandImpl(null));
+	New_Command routingdumpCommand = new New_TimeoutCommand(
+		new New_RoutingdumpCommand(null));
 	addCommand(CommandID.ROUTING_DUMP, routingdumpCommand);
 
 	// routing_mklhash command
-	New_Command routingmhtCommand = new New_TimeoutCommandImpl(
-		new New_RoutingmhtCommandImpl(null));
+	New_Command routingmhtCommand = new New_TimeoutCommand(
+		new New_RoutingmhtCommand(null));
 	addCommand(CommandID.ROUTING_MKLHASH, routingmhtCommand);
 
 	// add command
-	New_Command addCommand = new New_FailoverCommandImpl(
-		new New_TimeoutCommandImpl(new New_AddCommandImpl()));
+	New_Command addCommand = new New_FailoverCommand(
+		new New_TimeoutCommand(new New_AddCommand()));
 	addCommand(CommandID.ADD, addCommand);
     }
 

@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import jp.co.rakuten.rit.roma.client.RomaClientImpl.ShutdownHookThread;
-import jp.co.rakuten.rit.roma.client.command.Command;
 import jp.co.rakuten.rit.roma.client.command.CommandContext;
 import jp.co.rakuten.rit.roma.client.command.CommandException;
 import jp.co.rakuten.rit.roma.client.commands.CommandID;
 import jp.co.rakuten.rit.roma.client.commands.New_Command;
 import jp.co.rakuten.rit.roma.client.commands.TimeoutFilter;
-import jp.co.rakuten.rit.roma.client.routing.New_RoutingTable;
 
 /**
  * ROMA client to ROMA, which is a cluster of ROMA instances. The basic usage is
@@ -202,7 +200,7 @@ public class New_RomaClientImpl extends New_AbstractRomaClientImpl {
      * @see RomaClient#put(String, byte[])
      */
     public boolean put(String key, byte[] value) throws ClientException {
-	return put(key, value, new Date(0));
+	return put(key, value, 0);
     }
 
     /**
@@ -213,17 +211,19 @@ public class New_RomaClientImpl extends New_AbstractRomaClientImpl {
 	return update(CommandID.SET, key, value, expiry);
     }
 
+    /**
+     * @see RomaClient#put(String, byte[], long)
+     */
     public boolean put(String key, byte[] value, long expiry)
 	    throws ClientException {
-	// TODO Auto-generated method stub
-	return false;
+	return update0(CommandID.SET, key, value, expiry);
     }
 
     /**
      * @see RomaClient#append(String, byte[])
      */
     public boolean append(String key, byte[] value) throws ClientException {
-	return append(key, value, new Date(0));
+	return append(key, value, 0);
     }
 
     /**
@@ -235,10 +235,18 @@ public class New_RomaClientImpl extends New_AbstractRomaClientImpl {
     }
 
     /**
+     * @see RomaClient#append(String, byte[], long)
+     */
+    public boolean append(String key, byte[] value, long expiry)
+	    throws ClientException {
+	return update0(CommandID.APPEND, key, value, expiry);
+    }
+
+    /**
      * @see RomaClient#prepend(String, byte[])
      */
     public boolean prepend(String key, byte[] value) throws ClientException {
-	return prepend(key, value, new Date(0));
+	return prepend(key, value, 0);
     }
 
     /**
@@ -249,22 +257,18 @@ public class New_RomaClientImpl extends New_AbstractRomaClientImpl {
 	return update(CommandID.PREPEND, key, value, expiry);
     }
 
+    /**
+     * @see RomaClient#prepend(String, byte[], long)
+     */
+    public boolean prepend(String key, byte[] value, long expiry)
+	    throws ClientException {
+	return update0(CommandID.PREPEND, key, value, expiry);
+    }
+
     protected boolean update(int commandID, String key, byte[] value,
 	    Date expiry) throws ClientException {
-	CommandContext context = new CommandContext();
-	try {
-	    context.put(CommandContext.CONNECTION_POOL, connPool);
-	    context.put(CommandContext.ROUTING_TABLE, routingTable);
-	    context.put(CommandContext.KEY, key);
-	    context.put(CommandContext.HASH_NAME, hashName);
-	    context.put(CommandContext.VALUE, value);
-	    context.put(CommandContext.EXPIRY, expiry);
-	    context.put(CommandContext.COMMAND_ID, commandID);
-	    New_Command command = commandFactory.getCommand(commandID);
-	    return exec(command, context);
-	} catch (CommandException e) {
-	    throw toClientException(e);
-	}
+	long l = expiry.getTime() / 1000;
+	return update0(commandID, key, value, l);
     }
 
     protected boolean update0(final int commandID, final String key,
@@ -276,7 +280,7 @@ public class New_RomaClientImpl extends New_AbstractRomaClientImpl {
 	    context.put(CommandContext.KEY, key);
 	    context.put(CommandContext.HASH_NAME, hashName);
 	    context.put(CommandContext.VALUE, value);
-	    context.put(CommandContext.EXPIRY, "" + expiry);
+	    context.put(CommandContext.EXPIRY, expiry);
 	    context.put(CommandContext.COMMAND_ID, commandID);
 	    New_Command command = commandFactory.getCommand(commandID);
 	    return exec(command, context);
@@ -423,7 +427,7 @@ public class New_RomaClientImpl extends New_AbstractRomaClientImpl {
      * @see RomaClient#add(String, byte[])
      */
     public boolean add(String key, byte[] value) throws ClientException {
-	return add(key, value, new Date(0));
+	return add(key, value, 0);
     }
 
     /**
@@ -434,12 +438,26 @@ public class New_RomaClientImpl extends New_AbstractRomaClientImpl {
 	return update(CommandID.ADD, key, value, expiry);
     }
 
+    /**
+     * @see RomaClient#add(String, byte[], long)
+     */
+    public boolean add(String key, byte[] value, long expiry)
+	    throws ClientException {
+	return update0(CommandID.ADD, key, value, expiry);
+    }
+
     public CasResponse cas(String key, long casID, byte[] value)
 	    throws ClientException {
-	return cas(key, casID, value, new Date(0));
+	return cas(key, casID, value, 0);
     }
 
     public CasResponse cas(String key, long casID, byte[] value, Date expiry)
+	    throws ClientException {
+	long l = expiry.getTime() / 1000;
+	return cas(key, casID, value, l);
+    }
+
+    public CasResponse cas(String key, long casID, byte[] value, long expiry)
 	    throws ClientException {
 	int commandID = CommandID.CAS;
 	CommandContext context = new CommandContext();
