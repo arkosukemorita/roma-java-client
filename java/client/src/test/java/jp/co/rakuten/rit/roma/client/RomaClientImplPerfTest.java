@@ -2,7 +2,7 @@ package jp.co.rakuten.rit.roma.client;
 
 import java.util.Properties;
 
-import jp.co.rakuten.rit.roma.client.commands.TimeoutFilter;
+import jp.co.rakuten.rit.roma.client.commands.TimeoutCommand;
 import junit.framework.TestCase;
 
 public class RomaClientImplPerfTest extends TestCase {
@@ -30,10 +30,10 @@ public class RomaClientImplPerfTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-	RomaClientFactory factory = RomaClientFactory.getInstance();
+	RomaClientFactory factory = RomaClientFactoryImpl.getInstance();
 	CLIENT = factory.newRomaClient(new Properties());
 	CLIENT.open(Node.create(NODE_ID));
-	TimeoutFilter.timeout = 100 * 1000;
+	TimeoutCommand.timeout = 100 * 1000;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class RomaClientImplPerfTest extends TestCase {
 		long time = System.currentTimeMillis();
 		CLIENT.put(KEY_PREFIX + count, (dummy_prefix + count)
 			.getBytes());
-		//CLIENT.get(KEY_PREFIX + count);
+		// CLIENT.get(KEY_PREFIX + count);
 		time = System.currentTimeMillis() - time;
 		if (time > PERIOD_OF_TIMEOUT) {
 		    count_threshold++;

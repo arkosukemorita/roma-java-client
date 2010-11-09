@@ -3,28 +3,31 @@ package jp.co.rakuten.rit.roma.client.commands;
 import java.io.IOException;
 
 import jp.co.rakuten.rit.roma.client.ClientException;
+import jp.co.rakuten.rit.roma.client.command.AbstractCommand;
 import jp.co.rakuten.rit.roma.client.command.CommandContext;
 
-/**
- * 
- */
-public class CloseCommand extends DefaultCommand {
+public class CloseCommand extends AbstractCommand {
+
+    public CloseCommand() {
+	super(null);
+	// TODO Auto-generated constructor stub
+    }
 
     @Override
-    protected void create(CommandContext context) throws BadCommandException {
-        // TODO Auto-generated method stub
+    protected void create(CommandContext context) throws ClientException {
+	// TODO Auto-generated method stub
     }
 
     @Override
     protected boolean parseResult(CommandContext context)
-            throws ClientException {
-        // TODO Auto-generated method stub
-        return false;
+	    throws ClientException {
+	// TODO Auto-generated method stub
+	return false;
     }
 
     @Override
     protected void sendAndReceive(CommandContext context) throws IOException,
-            ClientException {
-        // TODO Auto-generated method stub
+	    ClientException {
+	// TODO Auto-generated method stub
     }
 }

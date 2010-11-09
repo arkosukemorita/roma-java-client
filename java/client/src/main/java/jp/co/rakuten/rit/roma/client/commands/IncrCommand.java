@@ -1,12 +1,11 @@
 package jp.co.rakuten.rit.roma.client.commands;
 
-/**
- * 
- */
-public class IncrCommand extends IncrAndDecrCommand {
+import jp.co.rakuten.rit.roma.client.ClientException;
+
+public class IncrCommand extends AbstractIncrAndDecrCommand {
 
     @Override
-    public String getCommand() throws BadCommandException {
-        return STR_INCREMENT;
+    public String getCommand() throws ClientException {
+	return STR_INCREMENT;
     }
 }

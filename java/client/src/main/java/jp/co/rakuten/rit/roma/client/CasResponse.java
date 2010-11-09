@@ -16,7 +16,7 @@ public enum CasResponse {
     NOT_FOUND,
     /**
      * Status indicating the value was found in the cache, but exists with a
-     * different CAS value than expected.  In this case, the value must be
+     * different CAS value than expected. In this case, the value must be
      * refetched and the CAS operation tried again.
      */
     EXISTS

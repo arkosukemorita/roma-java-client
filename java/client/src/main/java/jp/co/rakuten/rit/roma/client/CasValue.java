@@ -9,33 +9,35 @@ public class CasValue {
 
     /**
      * Construct a new CASValue with the given identifer and value.
-     *
-     * @param c the CAS identifier
-     * @param v the value
+     * 
+     * @param c
+     *            the CAS identifier
+     * @param v
+     *            the value
      */
     public CasValue(long c, byte[] v) {
-        super();
-        cas=c;
-        value=v;
+	super();
+	cas = c;
+	value = v;
     }
 
     /**
      * Get the CAS identifier.
      */
     public long getCas() {
-        return cas;
+	return cas;
     }
 
     /**
      * Get the object value.
      */
     public byte[] getValue() {
-        return value;
+	return value;
     }
 
     @Override
     public String toString() {
-        return "{CasValue " + cas + "/" + value + "}";
+	return "{CasValue " + cas + "/" + value + "}";
     }
 
 }

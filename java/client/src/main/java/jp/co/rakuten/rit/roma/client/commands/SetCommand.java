@@ -1,12 +1,11 @@
 package jp.co.rakuten.rit.roma.client.commands;
 
-/**
- * 
- */
-public class SetCommand extends StoreCommand {
+import jp.co.rakuten.rit.roma.client.ClientException;
+
+public class SetCommand extends AbstractStoreCommand {
 
     @Override
-    public String getCommand() throws BadCommandException {
-        return STR_SET;
+    public String getCommand() throws ClientException {
+	return STR_SET;
     }
 }

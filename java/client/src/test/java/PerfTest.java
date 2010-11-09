@@ -3,14 +3,12 @@ import java.util.List;
 import java.util.Properties;
 
 import jp.co.rakuten.rit.roma.client.AllTests;
-import jp.co.rakuten.rit.roma.client.Node;
 import jp.co.rakuten.rit.roma.client.RomaClient;
 import jp.co.rakuten.rit.roma.client.RomaClientFactory;
+import jp.co.rakuten.rit.roma.client.RomaClientFactoryImpl;
+import jp.co.rakuten.rit.roma.client.Node;
 import jp.co.rakuten.rit.roma.client.commands.TimeoutException;
-import jp.co.rakuten.rit.roma.client.util.ListWrapper;
-import jp.co.rakuten.rit.roma.client.util.StringListWrapper;
 import junit.framework.TestCase;
-
 
 public class PerfTest extends TestCase {
     private static String NODE_ID = AllTests.NODE_ID;
@@ -19,7 +17,7 @@ public class PerfTest extends TestCase {
 
     private static RomaClient CLIENT = null;
 
-    //public static int BIG_LOOP_COUNT = 100;
+    public static int BIG_LOOP_COUNT = 100;
 
     public static int SMALL_LOOP_COUNT = 1000;
 
@@ -36,14 +34,14 @@ public class PerfTest extends TestCase {
     }
 
     public void setUp() throws Exception {
-	RomaClientFactory factory = RomaClientFactory.getInstance();
+	RomaClientFactory factory = RomaClientFactoryImpl.getInstance();
 	CLIENT = factory.newRomaClient(new Properties());
 	List<Node> nodes = new ArrayList<Node>();
 	CLIENT.setNumOfThreads(NUM_OF_THREADS);
 	nodes.add(Node.create(NODE_ID));
 	CLIENT.open(nodes);
 	CLIENT.setTimeout(PERIOD_OF_TIMEOUT);
-	//CLIENT.setNumOfThreads(100);
+	// CLIENT.setNumOfThreads(100);
     }
 
     public void tearDown() throws Exception {
@@ -55,11 +53,11 @@ public class PerfTest extends TestCase {
 	assertTrue(true);
     }
 
-    public void XtestDeleteAndPrependLoop01() throws Exception {
+    public void testDeleteAndPrependLoop01() throws Exception {
 	big_loop();
     }
 
-    public void XtestDeleteAndPrependLoop02() throws Exception {
+    public void testDeleteAndPrependLoop02() throws Exception {
 	Thread[] threads = new Thread[NUM_OF_THREADS];
 	for (int i = 0; i < threads.length; ++i) {
 	    threads[i] = new Thread() {
@@ -84,7 +82,7 @@ public class PerfTest extends TestCase {
 
     private void big_loop() throws Exception {
 	int count = 0;
-	//while (count < BIG_LOOP_COUNT) {
+	// while (count < BIG_LOOP_COUNT) {
 	while (true) {
 	    small_loop(count);
 	    count++;
@@ -115,30 +113,25 @@ public class PerfTest extends TestCase {
 	    } catch (TimeoutException e) {
 		count_threshold1++;
 		System.out.println(e.getMessage());
-		//e.printStackTrace();
+		// e.printStackTrace();
 	    } catch (Exception e) {
-		e.printStackTrace();
+		// e.printStackTrace();
 		System.out.println(e.getMessage());
-		//throw e;
+		// throw e;
 	    } finally {
-		//Thread.sleep(PERIOD_OF_SLEEP);
+		// Thread.sleep(PERIOD_OF_SLEEP);
 		count++;
 	    }
 	}
 	time0 = System.currentTimeMillis() - time0;
 
 	StringBuilder sb = new StringBuilder();
-	sb.append("qps: ")
-		.append((int) (((double) (SMALL_LOOP_COUNT * 1000)) / time0))
-		.append(" ")
-		.append("(timeout count: ")
-		.append(count_threshold)
-		.append(", ")
-		.append(count_threshold1).append(")")
-		.append(" max = ")
-		.append(count_max / 1000)
-		.append(", min = ")
-		.append(count_min / 1000);
+	sb.append("qps: ").append(
+		(int) (((double) (SMALL_LOOP_COUNT * 1000)) / time0)).append(
+		" ").append("(timeout count: ").append(count_threshold).append(
+		", ").append(count_threshold1).append(")").append(" max = ")
+		.append(count_max / 1000).append(", min = ").append(
+			count_min / 1000);
 	System.out.println(sb.toString());
 	count_min = 0;
 	count_max = 0;
@@ -149,8 +142,8 @@ public class PerfTest extends TestCase {
 	int index = (int) (Math.random() * 500000);
 
 	if (0 <= queryID && queryID <= 5) {
-	    CLIENT.put(new Integer(index).toString(),
-		    (DUMMY_PREFIX + index).getBytes());
+	    CLIENT.put(new Integer(index).toString(), (DUMMY_PREFIX + index)
+		    .getBytes());
 	} else { // 5 < queryID <= 12
 	    CLIENT.get(new Integer(index).toString());
 	}
@@ -172,8 +165,8 @@ public class PerfTest extends TestCase {
     public static void main(final String[] args) throws Exception {
 	PerfTest test = new PerfTest();
 	test.setUp();
-	//test.testDeleteAndPrependLoop02();
-	test.XtestDeleteAndPrependLoop01();
+	// test.testDeleteAndPrependLoop02();
+	test.testDeleteAndPrependLoop01();
 	test.tearDown();
     }
 }

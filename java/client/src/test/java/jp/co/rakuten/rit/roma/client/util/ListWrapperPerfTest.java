@@ -3,9 +3,10 @@ package jp.co.rakuten.rit.roma.client.util;
 import java.util.Properties;
 
 import jp.co.rakuten.rit.roma.client.AllTests;
-import jp.co.rakuten.rit.roma.client.Node;
 import jp.co.rakuten.rit.roma.client.RomaClient;
 import jp.co.rakuten.rit.roma.client.RomaClientFactory;
+import jp.co.rakuten.rit.roma.client.RomaClientFactoryImpl;
+import jp.co.rakuten.rit.roma.client.Node;
 import jp.co.rakuten.rit.roma.client.commands.TimeoutException;
 import junit.framework.TestCase;
 
@@ -15,7 +16,7 @@ public class ListWrapperPerfTest extends TestCase {
     private static String KEY_PREFIX = ListWrapperPerfTest.class.getName();
 
     private static RomaClient CLIENT = null;
-    
+
     private static ListWrapper LISTUTIL = null;
 
     public static int BIG_LOOP_COUNT = 100;
@@ -36,7 +37,7 @@ public class ListWrapperPerfTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-	RomaClientFactory factory = RomaClientFactory.getInstance();
+	RomaClientFactory factory = RomaClientFactoryImpl.getInstance();
 	CLIENT = factory.newRomaClient(new Properties());
 	LISTUTIL = new ListWrapper(CLIENT);
 	CLIENT.open(Node.create(NODE_ID));
@@ -102,8 +103,9 @@ public class ListWrapperPerfTest extends TestCase {
 	    }
 	    try {
 		long time = System.currentTimeMillis();
-		LISTUTIL.deleteAndPrepend(KEY_PREFIX + count, (dummy_prefix + count).getBytes());
-		//LISTUTIL.get(KEY_PREFIX + count);
+		LISTUTIL.deleteAndPrepend(KEY_PREFIX + count,
+			(dummy_prefix + count).getBytes());
+		// LISTUTIL.get(KEY_PREFIX + count);
 		time = System.currentTimeMillis() - time;
 		if (time > PERIOD_OF_TIMEOUT) {
 		    count_threshold++;
@@ -111,7 +113,7 @@ public class ListWrapperPerfTest extends TestCase {
 	    } catch (TimeoutException e) {
 		count_threshold1++;
 		System.out.println(e.getMessage());
-		//e.printStackTrace();
+		// e.printStackTrace();
 	    } catch (Exception e) {
 		e.printStackTrace();
 		throw e;
@@ -125,9 +127,9 @@ public class ListWrapperPerfTest extends TestCase {
 	StringBuilder sb = new StringBuilder();
 	sb.append("qps: ").append(
 		(int) (((double) (SMALL_LOOP_COUNT * 1000)) / time0)).append(
-		" ").append("(timeout count: ").append(count_threshold)
-		.append(", ").append(count_threshold1).append(")");
-		
+		" ").append("(timeout count: ").append(count_threshold).append(
+		", ").append(count_threshold1).append(")");
+
 	System.out.println(sb.toString());
     }
 

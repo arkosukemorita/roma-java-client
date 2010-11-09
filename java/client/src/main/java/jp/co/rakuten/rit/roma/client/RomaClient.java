@@ -8,15 +8,14 @@ import java.util.Map;
 import jp.co.rakuten.rit.roma.client.command.Command;
 import jp.co.rakuten.rit.roma.client.command.CommandContext;
 import jp.co.rakuten.rit.roma.client.command.CommandException;
-import jp.co.rakuten.rit.roma.client.command.CommandGenerator;
-import jp.co.rakuten.rit.roma.client.commands.CommandID;
+import jp.co.rakuten.rit.roma.client.command.CommandFactory;
 import jp.co.rakuten.rit.roma.client.routing.RoutingTable;
 
 /**
  * This interface is provided as an interface for intaracting with ROMA.
  * 
  * The basic usage is written on
- * {@link jp.co.rakuten.rit.roma.client.RomaClientFactory}.
+ * {@link jp.co.rakuten.rit.roma.client.Old_RomaClientFactory}.
  * 
  * @version 0.3.5
  */
@@ -30,9 +29,9 @@ public interface RomaClient {
 
     RoutingTable getRoutingTable();
 
-    void setCommandGenerator(CommandGenerator commandGenerator);
+    void setCommandFactory(CommandFactory commandFactory);
 
-    CommandGenerator getCommandGenerator();
+    CommandFactory getCommandFactory();
 
     void setTimeout(long timeout);
 
@@ -94,7 +93,8 @@ public interface RomaClient {
     void close() throws ClientException;
 
     /**
-     * Set the expiry date of a stored data 
+     * Set the expiry date of a stored data
+     * 
      * @param key
      * @param expiry
      * @return
@@ -127,6 +127,8 @@ public interface RomaClient {
      */
     boolean put(String key, byte[] value, Date expiry) throws ClientException;
 
+    boolean put(String key, byte[] value, long expiry) throws ClientException;
+
     /**
      * Get a value with a key.
      * 
@@ -139,12 +141,13 @@ public interface RomaClient {
     Map<String, byte[]> gets(List<String> keys) throws ClientException;
 
     Map<String, byte[]> gets(List<String> keys, boolean useThreads)
-            throws ClientException;
+	    throws ClientException;
 
-    Map<String, CasValue> getsWithCasID(List<String> keys) throws ClientException;
-    
+    Map<String, CasValue> getsWithCasID(List<String> keys)
+	    throws ClientException;
+
     Map<String, CasValue> getsWithCasID(List<String> keys, boolean useThreads)
-            throws ClientException;
+	    throws ClientException;
 
     /**
      * Append the given value to the existing value.
@@ -167,7 +170,10 @@ public interface RomaClient {
      * @throws ClientException
      */
     boolean append(String key, byte[] value, Date expiry)
-            throws ClientException;
+	    throws ClientException;
+
+    boolean append(String key, byte[] value, long expiry)
+	    throws ClientException;
 
     /**
      * Prepend the given value to the existing value.
@@ -190,7 +196,10 @@ public interface RomaClient {
      * @throws ClientException
      */
     boolean prepend(String key, byte[] value, Date expiry)
-            throws ClientException;
+	    throws ClientException;
+
+    boolean prepend(String key, byte[] value, long expiry)
+	    throws ClientException;
 
     /**
      * Deletes ta stored value specified by the key
@@ -223,14 +232,15 @@ public interface RomaClient {
 
     /**
      * CAS operation.
-     *
+     * 
      * @param key
      * @param casId
      * @param value
      * @return CasResponse
      * @throws ClientException
      */
-    CasResponse cas(String key, long casID, byte[] value) throws ClientException;
+    CasResponse cas(String key, long casID, byte[] value)
+	    throws ClientException;
 
     /**
      * CAS operation.
@@ -242,10 +252,14 @@ public interface RomaClient {
      * @return CasResponse
      * @throws ClientException
      */
-    CasResponse cas(String key, long casID, byte[] value, Date expiry) throws ClientException;
+    CasResponse cas(String key, long casID, byte[] value, Date expiry)
+	    throws ClientException;
+
+    CasResponse cas(String key, long casID, byte[] value, long expiry)
+	    throws ClientException;
 
     boolean exec(Command command, CommandContext context)
-            throws CommandException;
+	    throws CommandException;
 
     /**
      * Store the value in ROMA if key does not exist.
@@ -271,5 +285,7 @@ public interface RomaClient {
      * @throws ClientException
      */
     boolean add(String key, byte[] value, Date expiry) throws ClientException;
+
+    boolean add(String key, byte[] value, long expiry) throws ClientException;
 
 }

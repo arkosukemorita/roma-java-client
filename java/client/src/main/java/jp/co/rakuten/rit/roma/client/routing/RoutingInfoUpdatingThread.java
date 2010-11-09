@@ -7,29 +7,29 @@ public class RoutingInfoUpdatingThread extends Thread {
     private int pollingPeriod;
 
     public RoutingInfoUpdatingThread(RoutingTable routingTable) {
-        this.routingTable = routingTable;
-        pollingPeriod = 3000;
+	this.routingTable = routingTable;
+	pollingPeriod = routingTable.interval;
     }
 
     public void doStart() {
-        start();
+	start();
     }
 
     public void doStop() {
-        stopped = true;
+	stopped = true;
     }
 
     @Override
     public void run() {
-        while (routingTable.enableLoop()) {
-            if (stopped) {
-                break;
-            }
-            try {
-                Thread.sleep(pollingPeriod);
-                routingTable.update();
-            } catch (InterruptedException e) {
-            } // ignore
-        }
+	while (routingTable.enableLoop()) {
+	    if (stopped) {
+		break;
+	    }
+	    try {
+		Thread.sleep(pollingPeriod);
+		routingTable.update();
+	    } catch (InterruptedException e) {
+	    } // ignore
+	}
     }
 }

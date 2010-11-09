@@ -2,9 +2,6 @@ package jp.co.rakuten.rit.roma.client.command;
 
 import java.util.HashMap;
 
-/**
- * 
- */
 public class CommandContext extends HashMap<String, Object> {
 
     private static final long serialVersionUID = 3317922575242590794L;
@@ -25,11 +22,11 @@ public class CommandContext extends HashMap<String, Object> {
     public static final String CAS_ID = "CAS_ID";
 
     public CommandContext() {
-        super();
+	super();
     }
 
     @Override
     public String toString() {
-        return super.toString();
+	return super.toString();
     }
 }

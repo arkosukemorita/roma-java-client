@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 
- */
 public class HashMapConnectionPoolImpl implements ConnectionPool {
 
     protected int size;
@@ -40,7 +37,7 @@ public class HashMapConnectionPoolImpl implements ConnectionPool {
     }
 
     public synchronized void delete(Node node, Connection conn) {
-	//pool.remove(node);
+	// pool.remove(node);
     }
 
     public synchronized void deleteAll(Node node) {

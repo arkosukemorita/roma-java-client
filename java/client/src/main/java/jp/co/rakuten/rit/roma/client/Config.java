@@ -1,8 +1,5 @@
 package jp.co.rakuten.rit.roma.client;
 
-/**
- *
- */
 public final class Config {
 
     public static final String CONNECTION_POOL_SIZE = "connection_pool.size";

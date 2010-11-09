@@ -1,12 +1,11 @@
 package jp.co.rakuten.rit.roma.client.commands;
 
-/**
- * 
- */
-public class AppendCommand extends StoreCommand implements CommandID {
+import jp.co.rakuten.rit.roma.client.ClientException;
+
+public class AppendCommand extends AbstractStoreCommand {
 
     @Override
-    public String getCommand() throws BadCommandException {
-        return STR_APPEND;
+    public String getCommand() throws ClientException {
+	return STR_APPEND;
     }
 }

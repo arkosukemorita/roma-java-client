@@ -24,7 +24,7 @@ public class StringListWrapper21Test extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-	RomaClientFactory factory = RomaClientFactory.getInstance();
+	RomaClientFactory factory = RomaClientFactoryImpl.getInstance();
 	CLIENT = factory.newRomaClient(new Properties());
 	LISTUTIL = new StringListWrapper(CLIENT, true);
 	CLIENT.open(Node.create(NODE_ID));
@@ -513,7 +513,7 @@ public class StringListWrapper21Test extends TestCase {
 	assertEquals(1, list.size());
 	assertEquals("01", list.get(0));
     }
-    
+
     public void testDeleteAndPrepend07() throws Exception {
 	long expiry = 1;
 	LISTUTIL = new StringListWrapper(CLIENT, true, expiry);
@@ -542,7 +542,7 @@ public class StringListWrapper21Test extends TestCase {
 	assertEquals(2, list.size());
 	assertEquals("02", list.get(0));
 	assertEquals("01", list.get(1));
-	
+
 	Thread.sleep(expiry * 1000 + 100);
 	assertTrue(LISTUTIL.deleteAndPrepend(KEY, "03"));
 	assertTrue(LISTUTIL.deleteAndPrepend(KEY, "04"));
@@ -551,7 +551,7 @@ public class StringListWrapper21Test extends TestCase {
 	assertEquals(2, list.size());
 	assertEquals("03", list.get(0));
 	assertEquals("04", list.get(1));
-	
+
 	Thread.sleep(expiry * 1000 + 100);
 	assertTrue(LISTUTIL.deleteAndPrepend(KEY, "05"));
 	assertTrue(LISTUTIL.deleteAndPrepend(KEY, "06"));

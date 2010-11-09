@@ -5,17 +5,14 @@ import java.util.List;
 import jp.co.rakuten.rit.roma.client.ClientException;
 import jp.co.rakuten.rit.roma.client.util.StringListWrapper.Entry;
 
-/**
- * 
- */
 interface StringListAdaptor {
 
     void setListSize(int listSize);
 
     int getListSize();
-    
+
     void setExpiry(long expiry);
-    
+
     long getExpiry();
 
     void setStringWrapper(StringWrapper wrapper);

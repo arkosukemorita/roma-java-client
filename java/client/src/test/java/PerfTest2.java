@@ -3,13 +3,13 @@ import java.util.List;
 import java.util.Properties;
 
 import jp.co.rakuten.rit.roma.client.AllTests;
-import jp.co.rakuten.rit.roma.client.Node;
 import jp.co.rakuten.rit.roma.client.RomaClient;
 import jp.co.rakuten.rit.roma.client.RomaClientFactory;
+import jp.co.rakuten.rit.roma.client.RomaClientFactoryImpl;
+import jp.co.rakuten.rit.roma.client.Node;
 import jp.co.rakuten.rit.roma.client.commands.TimeoutException;
 import jp.co.rakuten.rit.roma.client.util.ListWrapper;
 import junit.framework.TestCase;
-
 
 public class PerfTest2 extends TestCase {
     private static String NODE_ID = AllTests.NODE_ID;
@@ -33,7 +33,7 @@ public class PerfTest2 extends TestCase {
     }
 
     public void setUp() throws Exception {
-	RomaClientFactory factory = RomaClientFactory.getInstance();
+	RomaClientFactory factory = RomaClientFactoryImpl.getInstance();
 	CLIENT = factory.newRomaClient(new Properties());
 	List<Node> nodes = new ArrayList<Node>();
 	CLIENT.setNumOfThreads(NUM_OF_THREADS);
@@ -41,7 +41,7 @@ public class PerfTest2 extends TestCase {
 	LISTUTIL = new ListWrapper(CLIENT, 90);
 	CLIENT.open(nodes);
 	CLIENT.setTimeout(PERIOD_OF_TIMEOUT);
-	//CLIENT.setNumOfThreads(100);
+	// CLIENT.setNumOfThreads(100);
     }
 
     public void tearDown() throws Exception {
@@ -54,7 +54,7 @@ public class PerfTest2 extends TestCase {
 	assertTrue(true);
     }
 
-    public void XtestDeleteAndPrependLoop01() throws Exception {
+    public void testDeleteAndPrependLoop01() throws Exception {
 	big_loop();
     }
 
@@ -115,29 +115,25 @@ public class PerfTest2 extends TestCase {
 	    } catch (TimeoutException e) {
 		count_threshold1++;
 		System.out.println(e.getMessage());
-		//e.printStackTrace();
+		// e.printStackTrace();
 	    } catch (Exception e) {
-		e.printStackTrace();
-		throw e;
+		System.out.println(e.getMessage());
+		// e.printStackTrace();
+		// throw e;
 	    } finally {
-		//Thread.sleep(PERIOD_OF_SLEEP);
+		// Thread.sleep(PERIOD_OF_SLEEP);
 		count++;
 	    }
 	}
 	time0 = System.currentTimeMillis() - time0;
 
 	StringBuilder sb = new StringBuilder();
-	sb.append("qps: ")
-		.append((int) (((double) (SMALL_LOOP_COUNT * 1000)) / time0))
-		.append(" ")
-		.append("(timeout count: ")
-		.append(count_threshold)
-		.append(", ")
-		.append(count_threshold1).append(")")
-		.append(" max = ")
-		.append(count_max / 1000)
-		.append(", min = ")
-		.append(count_min / 1000);
+	sb.append("qps: ").append(
+		(int) (((double) (SMALL_LOOP_COUNT * 1000)) / time0)).append(
+		" ").append("(timeout count: ").append(count_threshold).append(
+		", ").append(count_threshold1).append(")").append(" max = ")
+		.append(count_max / 1000).append(", min = ").append(
+			count_min / 1000);
 	System.out.println(sb.toString());
 	count_min = 0;
 	count_max = 0;
@@ -157,9 +153,9 @@ public class PerfTest2 extends TestCase {
 	StringBuilder sb = new StringBuilder();
 	for (int i = 0; i < SIZE_OF_DATA; ++i) {
 	    sb.append(A);
-	    //sb.append(i);
+	    // sb.append(i);
 	}
-	//sb.append("::");
+	// sb.append("::");
 	return sb.toString();
     }
 
@@ -167,7 +163,7 @@ public class PerfTest2 extends TestCase {
 	PerfTest2 test = new PerfTest2();
 	test.setUp();
 	test.testDeleteAndPrependLoop02();
-	//test.testDeleteAndPrependLoop01();
+	// test.testDeleteAndPrependLoop01();
 	test.tearDown();
     }
 }

@@ -8,8 +8,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 /**
- * A connection to a ROMA process.  
- * 
+ * A connection to a ROMA process.
  */
 public class Connection {
 
@@ -20,10 +19,12 @@ public class Connection {
     public OutputStream out;
 
     /**
-     * Construct a connection to a ROMA process.  
+     * Construct a connection to a ROMA process.
      * 
-     * @param sock - a socket of the ROMA process to connect to 
-     * @throws IOException - if creating this connection fails
+     * @param sock
+     *            - a socket of the ROMA process to connect to
+     * @throws IOException
+     *             - if creating this connection fails
      */
     public Connection(final Socket sock) throws IOException {
 	this.sock = sock;
@@ -32,9 +33,10 @@ public class Connection {
     }
 
     /**
-     * Close this connection.  
+     * Close this connection.
      * 
-     * @throws IOException - if closing this connection fails 
+     * @throws IOException
+     *             - if closing this connection fails
      */
     public void close() throws IOException {
 	if (in != null) {

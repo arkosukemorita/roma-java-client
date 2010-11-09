@@ -1,13 +1,13 @@
 package jp.co.rakuten.rit.roma.client.util;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import jp.co.rakuten.rit.roma.client.AllTests;
-import jp.co.rakuten.rit.roma.client.Node;
 import jp.co.rakuten.rit.roma.client.RomaClient;
 import jp.co.rakuten.rit.roma.client.RomaClientFactory;
+import jp.co.rakuten.rit.roma.client.RomaClientFactoryImpl;
+import jp.co.rakuten.rit.roma.client.Node;
 import junit.framework.TestCase;
 
 public class ListWrapper2Test extends TestCase {
@@ -27,7 +27,7 @@ public class ListWrapper2Test extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-	RomaClientFactory factory = RomaClientFactory.getInstance();
+	RomaClientFactory factory = RomaClientFactoryImpl.getInstance();
 	CLIENT = factory.newRomaClient(new Properties());
 	LISTUTIL = new ListWrapper(CLIENT);
 	CLIENT.open(Node.create(NODE_ID));
@@ -178,33 +178,39 @@ public class ListWrapper2Test extends TestCase {
 	    assertTrue(LISTUTIL.append(KEY, "01".getBytes()));
 	    assertTrue(LISTUTIL.append(KEY, "02".getBytes()));
 	    assertTrue(LISTUTIL.append(KEY, "03".getBytes()));
-	    
-	    long d = (System.currentTimeMillis() / 1000L) + 2;
+
+	    long d = 2; // ***fixed***
 	    CLIENT.expire(KEY, d);
-	    
+
 	    List<ListWrapper.Entry> list = LISTUTIL.getEntries(KEY);
 	    assertEquals(3, list.size());
-	    assertEquals("01", new String(((ListWrapper.Entry) list.get(0)).getValue()));
-	    assertEquals("02", new String(((ListWrapper.Entry) list.get(1)).getValue()));
-	    assertEquals("03", new String(((ListWrapper.Entry) list.get(2)).getValue()));
-	    
+	    assertEquals("01", new String(((ListWrapper.Entry) list.get(0))
+		    .getValue()));
+	    assertEquals("02", new String(((ListWrapper.Entry) list.get(1))
+		    .getValue()));
+	    assertEquals("03", new String(((ListWrapper.Entry) list.get(2))
+		    .getValue()));
+
 	    Thread.sleep(3000);
-	    
+
 	    list = LISTUTIL.getEntries(KEY);
 	    assertEquals(0, list.size());
-	    
+
 	    list = LISTUTIL.getEntries(KEY, 2, 5);
 	    assertEquals(0, list.size());
 
 	    assertTrue(LISTUTIL.append(KEY, "04".getBytes()));
 	    assertTrue(LISTUTIL.append(KEY, "05".getBytes()));
 	    assertTrue(LISTUTIL.append(KEY, "06".getBytes()));
-	    
+
 	    list = LISTUTIL.getEntries(KEY);
 	    assertEquals(3, list.size());
-	    assertEquals("04", new String(((ListWrapper.Entry) list.get(0)).getValue()));
-	    assertEquals("05", new String(((ListWrapper.Entry) list.get(1)).getValue()));
-	    assertEquals("06", new String(((ListWrapper.Entry) list.get(2)).getValue()));
+	    assertEquals("04", new String(((ListWrapper.Entry) list.get(0))
+		    .getValue()));
+	    assertEquals("05", new String(((ListWrapper.Entry) list.get(1))
+		    .getValue()));
+	    assertEquals("06", new String(((ListWrapper.Entry) list.get(2))
+		    .getValue()));
 	} finally {
 	    CLIENT.delete(KEY);
 	}

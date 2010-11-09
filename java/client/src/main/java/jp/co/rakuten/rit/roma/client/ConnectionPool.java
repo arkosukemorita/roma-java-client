@@ -2,9 +2,6 @@ package jp.co.rakuten.rit.roma.client;
 
 import java.io.IOException;
 
-/**
- * 
- */
 public interface ConnectionPool {
 
     public Connection get(Node node) throws IOException;

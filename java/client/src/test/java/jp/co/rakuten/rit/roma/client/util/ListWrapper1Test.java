@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Properties;
 
 import jp.co.rakuten.rit.roma.client.AllTests;
-import jp.co.rakuten.rit.roma.client.Node;
 import jp.co.rakuten.rit.roma.client.RomaClient;
 import jp.co.rakuten.rit.roma.client.RomaClientFactory;
+import jp.co.rakuten.rit.roma.client.RomaClientFactoryImpl;
+import jp.co.rakuten.rit.roma.client.Node;
 import junit.framework.TestCase;
 
 public class ListWrapper1Test extends TestCase {
@@ -26,7 +27,7 @@ public class ListWrapper1Test extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-	RomaClientFactory factory = RomaClientFactory.getInstance();
+	RomaClientFactory factory = RomaClientFactoryImpl.getInstance();
 	CLIENT = factory.newRomaClient(new Properties());
 	LISTUTIL = new ListWrapper(CLIENT);
 	CLIENT.open(Node.create(NODE_ID));
@@ -543,7 +544,7 @@ public class ListWrapper1Test extends TestCase {
 	assertEquals(2, list.size());
 	assertEquals("02", new String((byte[]) list.get(0)));
 	assertEquals("01", new String((byte[]) list.get(1)));
-	
+
 	Thread.sleep(expiry * 1000 + 100);
 	assertTrue(LISTUTIL.deleteAndPrepend(KEY, "03".getBytes()));
 	assertTrue(LISTUTIL.deleteAndPrepend(KEY, "04".getBytes()));
@@ -552,7 +553,7 @@ public class ListWrapper1Test extends TestCase {
 	assertEquals(2, list.size());
 	assertEquals("03", new String((byte[]) list.get(0)));
 	assertEquals("04", new String((byte[]) list.get(1)));
-	
+
 	Thread.sleep(expiry * 1000 + 100);
 	assertTrue(LISTUTIL.deleteAndPrepend(KEY, "05".getBytes()));
 	assertTrue(LISTUTIL.deleteAndPrepend(KEY, "06".getBytes()));
