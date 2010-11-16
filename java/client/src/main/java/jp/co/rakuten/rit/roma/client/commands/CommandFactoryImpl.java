@@ -17,67 +17,67 @@ public class CommandFactoryImpl implements CommandFactory {
     protected void addCommands() {
 
 	// get command
-	Command getCommand = new FailOverCommand(new TimeoutCommand(
+	Command getCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new GetCommand()));
 	addCommand(CommandID.GET, getCommand);
 
 	// gets command
-	Command getsCommand = new FailOverCommand(new TimeoutCommand(
+	Command getsCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new GetsCommand()));
 	addCommand(CommandID.GETS, getsCommand);
 
 	// gets_opt command
-	Command getsOptCommand = new FailOverCommand(new TimeoutCommand(
+	Command getsOptCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new GetsOptCommand()));
 	addCommand(CommandID.GETS_OPT, getsOptCommand);
 
 	// gets_with_casID command
-	Command getsWithCasIDCommand = new FailOverCommand(new TimeoutCommand(
+	Command getsWithCasIDCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new GetsWithCasIDCommand()));
 	addCommand(CommandID.GETS_WITH_CASID, getsWithCasIDCommand);
 
 	// gets_with_casID_opt command
-	Command getsWithCasIDOptCommand = new FailOverCommand(
+	Command getsWithCasIDOptCommand = new FailOverDefaultCommand(
 		new TimeoutCommand(new GetsWithCasIDOptCommand()));
 	addCommand(CommandID.GETS_WITH_CASID_OPT, getsWithCasIDOptCommand);
 
 	// set command
-	Command setCommand = new FailOverCommand(new TimeoutCommand(
+	Command setCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new SetCommand()));
 	addCommand(CommandID.SET, setCommand);
 
 	// append command
-	Command appendCommand = new FailOverCommand(new TimeoutCommand(
+	Command appendCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new AppendCommand()));
 	addCommand(CommandID.APPEND, appendCommand);
 
 	// prepend command
-	Command prependCommand = new FailOverCommand(new TimeoutCommand(
+	Command prependCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new PrependCommand()));
 	addCommand(CommandID.PREPEND, prependCommand);
 
 	// delete command
-	Command deleteCommand = new FailOverCommand(new TimeoutCommand(
+	Command deleteCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new DeleteCommand()));
 	addCommand(CommandID.DELETE, deleteCommand);
 
 	// increment command
-	Command incrCommand = new FailOverCommand(new TimeoutCommand(
+	Command incrCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new IncrCommand()));
 	addCommand(CommandID.INCREMENT, incrCommand);
 
 	// decrement command
-	Command decrCommand = new FailOverCommand(new TimeoutCommand(
+	Command decrCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new DecrCommand()));
 	addCommand(CommandID.DECREMENT, decrCommand);
 
 	// cas command
-	Command casCommand = new FailOverCommand(new TimeoutCommand(
+	Command casCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new CasCommand()));
 	addCommand(CommandID.CAS, casCommand);
 
 	// expire command
-	Command expireCommand = new FailOverCommand(new TimeoutCommand(
+	Command expireCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new ExpireCommand()));
 	addCommand(CommandID.EXPIRE, expireCommand);
 
@@ -92,7 +92,7 @@ public class CommandFactoryImpl implements CommandFactory {
 	addCommand(CommandID.ROUTING_MKLHASH, routingmhtCommand);
 
 	// add command
-	Command addCommand = new FailOverCommand(new TimeoutCommand(
+	Command addCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new AddCommand()));
 	addCommand(CommandID.ADD, addCommand);
     }

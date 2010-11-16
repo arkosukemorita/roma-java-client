@@ -218,6 +218,14 @@ public class RoutingTable {
 	}
     }
 
+    public List<Node> searchNodes(String key, BigInteger hash) {
+	List<Node> nodeList;
+	String virtualNodeID = getVirtualNodeID(hash).toString();
+
+	nodeList = getVirtualNodes(virtualNodeID);
+	return nodeList;
+    }
+
     public Node searchNode(String key, BigInteger hash) {
 	Node node = null;
 

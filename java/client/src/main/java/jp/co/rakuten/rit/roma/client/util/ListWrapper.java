@@ -11,7 +11,7 @@ import jp.co.rakuten.rit.roma.client.command.Command;
 import jp.co.rakuten.rit.roma.client.command.CommandContext;
 import jp.co.rakuten.rit.roma.client.command.CommandException;
 import jp.co.rakuten.rit.roma.client.command.CommandFactory;
-import jp.co.rakuten.rit.roma.client.commands.FailOverCommand;
+import jp.co.rakuten.rit.roma.client.commands.FailOverDefaultCommand;
 import jp.co.rakuten.rit.roma.client.commands.TimeoutCommand;
 import jp.co.rakuten.rit.roma.client.util.commands.ListCommandID;
 import jp.co.rakuten.rit.roma.client.util.commands.ClearCommand;
@@ -138,117 +138,117 @@ public class ListWrapper {
 	CommandFactory commandFactory = client.getCommandFactory();
 
 	// push command
-	Command pushCommand = new FailOverCommand(new TimeoutCommand(
+	Command pushCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new PushCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_PUSH, pushCommand);
 
 	// sized_push command
-	Command sizedPushCommand = new FailOverCommand(new TimeoutCommand(
+	Command sizedPushCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new SizedPushCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_SIZED_PUSH,
 		sizedPushCommand);
 
 	// swap_and_push command
-	Command swapAndPushCommand = new FailOverCommand(new TimeoutCommand(
+	Command swapAndPushCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new SwapAndPushCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_SWAP_AND_PUSH,
 		swapAndPushCommand);
 
 	// swap_and_sized_push command
-	Command swapAndSizedPushCommand = new FailOverCommand(
+	Command swapAndSizedPushCommand = new FailOverDefaultCommand(
 		new TimeoutCommand(new SwapAndSizedPushCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_SWAP_AND_SIZED_PUSH,
 		swapAndSizedPushCommand);
 
 	// expired_swap_and_push command
-	Command expiredSwapAndPushCommand = new FailOverCommand(
+	Command expiredSwapAndPushCommand = new FailOverDefaultCommand(
 		new TimeoutCommand(new ExpiredSwapAndPushCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_EXPIRED_SWAP_AND_PUSH,
 		expiredSwapAndPushCommand);
 
 	// expired_swap_and_push command
-	Command expiredSwapAndSizedPushCommand = new FailOverCommand(
+	Command expiredSwapAndSizedPushCommand = new FailOverDefaultCommand(
 		new TimeoutCommand(new ExpiredSwapAndSizedPushCommand()));
 	commandFactory.addCommand(
 		ListCommandID.ALIST_EXPIRED_SWAP_AND_SIZED_PUSH,
 		expiredSwapAndSizedPushCommand);
 
 	// delete_at command
-	Command DeleteAtCommand = new FailOverCommand(new TimeoutCommand(
+	Command DeleteAtCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new DeleteAtCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_DELETE_AT,
 		DeleteAtCommand);
 
 	// delete command
-	Command DeleteCommand = new FailOverCommand(new TimeoutCommand(
+	Command DeleteCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new DeleteCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_DELETE, DeleteCommand);
 
 	// insert command
-	Command InsertCommand = new FailOverCommand(new TimeoutCommand(
+	Command InsertCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new InsertCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_INSERT, InsertCommand);
 
 	// sized_insert command
-	Command SizedInsertCommand = new FailOverCommand(new TimeoutCommand(
+	Command SizedInsertCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new SizedInsertCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_SIZED_INSERT,
 		SizedInsertCommand);
 
 	// swap and insert command
-	Command SwapAndInsertCommand = new FailOverCommand(new TimeoutCommand(
+	Command SwapAndInsertCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new SwapAndInsertCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_SWAP_AND_INSERT,
 		SwapAndInsertCommand);
 
 	// swap and sized insert command
-	Command SwapAndSizedInsertCommand = new FailOverCommand(
+	Command SwapAndSizedInsertCommand = new FailOverDefaultCommand(
 		new TimeoutCommand(new SwapAndSizedInsertCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_SWAP_AND_SIZED_INSERT,
 		SwapAndSizedInsertCommand);
 
 	// expired swap and insert command
-	Command ExpiredSwapAndInsertCommand = new FailOverCommand(
+	Command ExpiredSwapAndInsertCommand = new FailOverDefaultCommand(
 		new TimeoutCommand(new ExpiredSwapAndInsertCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_EXPIRED_SWAP_AND_INSERT,
 		ExpiredSwapAndInsertCommand);
 
 	// expired swap and sized insert command
-	Command ExpiredSwapAndSizedInsertCommand = new FailOverCommand(
+	Command ExpiredSwapAndSizedInsertCommand = new FailOverDefaultCommand(
 		new TimeoutCommand(new ExpiredSwapAndSizedInsertCommand()));
 	commandFactory.addCommand(
 		ListCommandID.ALIST_EXPIRED_SWAP_AND_SIZED_INSERT,
 		ExpiredSwapAndSizedInsertCommand);
 
 	// join command
-	Command JoinCommand = new FailOverCommand(new TimeoutCommand(
+	Command JoinCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new JoinCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_JOIN, JoinCommand);
 
 	// join with time command
-	Command JoinWithTimeCommand = new FailOverCommand(new TimeoutCommand(
+	Command JoinWithTimeCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new JoinWithTimeCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_JOIN_WITH_TIME,
 		JoinWithTimeCommand);
 
 	// gets command
-	Command GetsCommand = new FailOverCommand(new TimeoutCommand(
+	Command GetsCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new GetsCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_GETS, GetsCommand);
 
 	// gets with time command
-	Command GetsWithTimeCommand = new FailOverCommand(new TimeoutCommand(
+	Command GetsWithTimeCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new GetsWithTimeCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_GETS_WITH_TIME,
 		GetsWithTimeCommand);
 
 	// clear command
-	Command ClearCommand = new FailOverCommand(new TimeoutCommand(
+	Command ClearCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new ClearCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_CLEAR, ClearCommand);
 
 	// length command
-	Command LengthCommand = new FailOverCommand(new TimeoutCommand(
+	Command LengthCommand = new FailOverDefaultCommand(new TimeoutCommand(
 		new LengthCommand()));
 	commandFactory.addCommand(ListCommandID.ALIST_LENGTH, LengthCommand);
 

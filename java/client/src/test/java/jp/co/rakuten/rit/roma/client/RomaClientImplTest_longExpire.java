@@ -45,7 +45,6 @@ public class RomaClientImplTest_longExpire extends TestCase {
     public void testGets01() throws Exception {
 	try {
 	    KEY = KEY_PREFIX + "testGets01";
-	    // System.out.println(CLIENT.put(KEY + "01", "01".getBytes()));
 	    assertTrue(CLIENT.put(KEY + "01", "01".getBytes()));
 	    assertTrue(CLIENT.put(KEY + "02", "02".getBytes()));
 	    assertTrue(CLIENT.put(KEY + "03", "03".getBytes()));

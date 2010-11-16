@@ -1,7 +1,7 @@
 package jp.co.rakuten.rit.roma.client;
 
 import jp.co.rakuten.rit.roma.client.command.CommandFactory;
-import jp.co.rakuten.rit.roma.client.commands.FailOverCommand;
+import jp.co.rakuten.rit.roma.client.commands.AbstractFailOverCommand;
 import jp.co.rakuten.rit.roma.client.commands.TimeoutCommand;
 import jp.co.rakuten.rit.roma.client.routing.RoutingTable;
 
@@ -53,19 +53,19 @@ public abstract class AbstractRomaClientImpl implements RomaClient {
     }
 
     public void setRetryCount(int retryCount) {
-	FailOverCommand.retryThreshold = retryCount;
+	AbstractFailOverCommand.retryThreshold = retryCount;
     }
 
     public int getRetryCount() {
-	return FailOverCommand.retryThreshold;
+	return AbstractFailOverCommand.retryThreshold;
     }
 
     public void setRetrySleepTime(long sleepTime) {
-	FailOverCommand.sleepPeriod = sleepTime;
+	AbstractFailOverCommand.sleepPeriod = sleepTime;
     }
 
     public long getRetrySleepTime() {
-	return FailOverCommand.sleepPeriod;
+	return AbstractFailOverCommand.sleepPeriod;
     }
 
     public void setHashName(String hashName) {
