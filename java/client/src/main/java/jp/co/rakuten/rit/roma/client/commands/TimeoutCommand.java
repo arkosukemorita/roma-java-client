@@ -1,6 +1,7 @@
 package jp.co.rakuten.rit.roma.client.commands;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
@@ -35,6 +36,8 @@ public class TimeoutCommand extends AbstractCommand {
 	}
 	executor = null;
     }
+    
+    static Socket sock;
 
     public static class CallableImpl implements Callable<Boolean> {
 
@@ -45,7 +48,7 @@ public class TimeoutCommand extends AbstractCommand {
 	    this.command = command;
 	    this.context = context;
 	}
-
+	
 	public Boolean call() throws Exception {
 	    int commandID = (Integer) context.get(CommandContext.COMMAND_ID);
 	    Node node = null;
@@ -55,16 +58,30 @@ public class TimeoutCommand extends AbstractCommand {
 		node = (Node) context.get(CommandContext.NODE);
 		if (commandID != CommandID.ROUTING_DUMP
 			&& commandID != CommandID.ROUTING_MKLHASH) {
+		    // TODO
+		    System.out.println("### sock: " + sock);
+		    if (sock == null) {
+			sock = new Socket(node.getHost(), node.getPort());
+		    }
+		    conn = new Connection(sock);
 		    // general commands
-		    connPool = (ConnectionPool) context
-			    .get(CommandContext.CONNECTION_POOL);
-		    conn = connPool.get(node);
-		    context.put(CommandContext.CONNECTION, conn);
+//		    connPool = (ConnectionPool) context
+//			    .get(CommandContext.CONNECTION_POOL);
+//		    conn = connPool.get(node);
+//		    context.put(CommandContext.CONNECTION, conn);
 		} else { // routingdump, routingmkh
 		    Socket sock = new Socket(node.getHost(), node.getPort());
 		    conn = new Connection(sock);
 		    context.put(CommandContext.CONNECTION, conn);
 		}
+		// TODO
+//		if (sock == null) {
+//		    sock = new Socket(node.getHost(), node.getPort());
+//		    conn = new Connection(sock);
+//		} else {
+//		    conn = new Connection(sock);
+//		}
+		 context.put(CommandContext.CONNECTION, conn);
 		return command.execute(context);
 	    } finally {
 		conn = (Connection) context.get(CommandContext.CONNECTION);
@@ -72,12 +89,15 @@ public class TimeoutCommand extends AbstractCommand {
 		    try {
 			if (commandID != CommandID.ROUTING_DUMP
 				&& commandID != CommandID.ROUTING_MKLHASH) { // general
+			    // TODO
 			    // commands
-			    connPool.put(node, conn);
+//			    connPool.put(node, conn);
 			} else { // routingdump, routingmkh
 			    conn.close();
 			}
+//			 conn.close(); // TODO
 		    } catch (IOException e) { // ignore
+			e.printStackTrace();
 		    }
 		}
 	    }
@@ -114,7 +134,6 @@ public class TimeoutCommand extends AbstractCommand {
 	    t = e.getCause();
 	} catch (InterruptedException e) { // ignore
 	}
-
 	// error handling
 	if (t != null) {
 	    if (t instanceof java.util.concurrent.TimeoutException) {
@@ -125,15 +144,17 @@ public class TimeoutCommand extends AbstractCommand {
 		future.cancel(true);
 		if (conn != null) {
 		    try {
-			if (commandID != CommandID.ROUTING_DUMP
-				&& commandID != CommandID.ROUTING_MKLHASH) { // general
-			    // commands
-			    Node node = (Node) context.get(CommandContext.NODE);
-			    connPool.delete(node, conn);
-			} else { // routingdump, routingmkh
-			    conn.close();
-			}
+//			if (commandID != CommandID.ROUTING_DUMP
+//				&& commandID != CommandID.ROUTING_MKLHASH) { // general
+//			    // commands
+//			    Node node = (Node) context.get(CommandContext.NODE);
+//			    connPool.delete(node, conn);
+//			} else { // routingdump, routingmkh
+//			    conn.close();
+//			}
+			 conn.close();// TODO
 		    } catch (IOException e) { // ignore
+			e.printStackTrace();
 		    }
 		}
 		throw new CommandException(new TimeoutException(t));

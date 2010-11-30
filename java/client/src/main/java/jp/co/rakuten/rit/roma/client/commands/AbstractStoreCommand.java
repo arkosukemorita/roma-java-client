@@ -42,21 +42,25 @@ public class AbstractStoreCommand extends AbstractCommand implements CommandID {
     }
 
     public void sendAndReceive(CommandContext context) throws IOException {
-	StringBuilder sb = (StringBuilder) context
-		.get(CommandContext.STRING_DATA);
-	Connection conn = (Connection) context.get(CommandContext.CONNECTION);
-	conn.out.write(sb.toString().getBytes());
-	conn.out.write(((byte[]) context.get(CommandContext.VALUE)));
-	conn.out.write(STR_CRLF.getBytes());
-	conn.out.flush();
-	sb = new StringBuilder();
-	sb.append(conn.in.readLine());
-	context.put(CommandContext.STRING_DATA, sb);
+	try {
+	    StringBuilder sb = (StringBuilder) context
+		    .get(CommandContext.STRING_DATA);
+	    Connection conn = (Connection) context
+		    .get(CommandContext.CONNECTION);
+	    conn.out.write(sb.toString().getBytes());
+	    conn.out.write(((byte[]) context.get(CommandContext.VALUE)));
+	    conn.out.write(STR_CRLF.getBytes());
+	    conn.out.flush();
+	    sb = new StringBuilder();
+	    sb.append(conn.in.readLine());
+	    context.put(CommandContext.STRING_DATA, sb);
+	} catch (Throwable e) {
+	    throw new IOException(e);
+	}
     }
 
     public boolean parseResult(CommandContext context) throws ClientException {
-	StringBuilder sb = (StringBuilder) context
-		.get(CommandContext.STRING_DATA);
+	StringBuilder sb = (StringBuilder) context.get(CommandContext.STRING_DATA);
 	String ret = sb.toString();
 	if (ret.startsWith("STORED")) {
 	    return true;
@@ -65,7 +69,10 @@ public class AbstractStoreCommand extends AbstractCommand implements CommandID {
 	} else if (ret.startsWith("SERVER_ERROR")
 		|| ret.startsWith("CLIENT_ERROR") || ret.startsWith("ERROR")) {
 	    throw new ClientException(ret);
+	} else {
+	    throw new  ClientException("fatal: conn.in.readLine doesn't have string data...");
 	}
-	return false;
+//	System.out.println("###: ret is null? ->" + (ret == null));
+//	return false;
     }
 }

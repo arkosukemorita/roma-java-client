@@ -104,10 +104,10 @@ public class FailOverDefaultCommand extends AbstractFailOverCommand {
 	throw new UnsupportedOperationException();
     }
 
+    // necessary to extends AbstractFailOevrCommand
     @Override
     public Node selectNode(RoutingTable routingTable, String key,
 	    BigInteger hash, int rertyCount) {
-	// TODO Auto-generated method stub
 	return null;
     }
 }

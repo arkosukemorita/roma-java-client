@@ -79,7 +79,7 @@ public abstract class AbstractFailOverCommand extends AbstractCommand {
 	List<String> errorList = new ArrayList<String>();
 	Throwable t = null;
 
-	// start to run next coommnd
+	// start to run next command
 	while (true) {
 	    try {
 		Node node = selectNode(routingTable, key, hash, retryCount);
@@ -87,16 +87,26 @@ public abstract class AbstractFailOverCommand extends AbstractCommand {
 		context.put(CommandContext.NODE, node);
 		return next.execute(context);
 	    } catch (CommandException e) {
+		System.out.println("###: Handle error message!");
 		handleErrorMessage(errorList, e, t);
 	    }
+
+	    // TODO ### delete 3 lines below
+	    if (t == null) {
+		System.out.println("###: t is null!! t:" + t);
+	    }
+
 	    // re-try message-passing or handle an error
 	    if (t != null) {
+		System.out.println("###: t is NOT null!! t:" + t);
 		try {
+		    System.out.println("###: incrFailCount called");
 		    incrFailCount(context, t);
 		    Thread.sleep(sleepPeriod);
 		} catch (InterruptedException e) { // ignore
 		}
 		if (retryCount < retryThreshold) {
+		    System.out.println("###: retryCount incremented");
 		    retryCount++;
 		} else {
 		    CommandException e = new CommandException(
